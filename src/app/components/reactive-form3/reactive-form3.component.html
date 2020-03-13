@@ -1,0 +1,68 @@
+<div class="container" >
+  <!-- [formGroup]="orderForm" -->
+<form [formGroup]="schoolForms"    (ngSubmit)="submit()">
+  <legend class="py-1" >Hobbies | <span class="fas fa-plus" (click)="addItem()"></span></legend>
+  <div  formArrayName="schoolArray"
+  *ngFor="let item of controls; let i = index;">
+  <div  [formGroupName]="i">
+    <div class="row text-center my-2">
+      <div class="col-sm-3 px-1">
+        <input formControlName="section" class="form-control" placeholder="Section">
+        <!-- alert -->
+        <div *ngIf="controls[i]['controls'].section.touched && controls[i]['controls'].section.invalid" class="alert alert-danger mt-1" role="alert">
+          <p *ngIf="controls[i]['controls'].section.errors.required" >Section is required!</p>
+          <p *ngIf="controls[i]['controls'].section.errors.maxlength" >MaxLength must be {{controls[i]['controls'].section.errors.maxlength.requiredLength}} Characters </p>
+        </div>
+      </div>
+      <div class="col-sm-7 px-1">
+        <input formControlName="className" class="form-control" placeholder="Class Name">
+        <!-- alert -->
+        <div *ngIf="controls[i]['controls'].className.touched && controls[i]['controls'].className.invalid" class="alert alert-danger mt-1" role="alert">
+          <p *ngIf="controls[i]['controls'].className.errors.required" >Class Name is required!</p>
+          <p *ngIf="controls[i]['controls'].className.errors.maxlength" >MaxLength must be {{controls[i]['controls'].className.errors.maxlength.requiredLength}} Characters </p>
+        </div>
+      </div>
+      <div class=" col-sm-1 px-1 text-center">
+        <div>
+          <select name="grade" class="form-control" formControlName="grade">
+            <option selected disabled> Grade</option>
+            <option *ngFor="let gra of grade" [value]="gra" class="text-center" >{{gra}}</option>
+          </select>
+        <!-- alert -->
+        <div *ngIf="controls[i]['controls'].grade.touched && controls[i]['controls'].grade.invalid" class="alert alert-danger mt-1" role="alert">
+          <p *ngIf="controls[i]['controls'].grade.errors.required" >grade is required!</p>
+        </div>
+        </div>
+      </div>
+      <div class="col-1 px-1">
+        <span class=" input-group-text fas fa-trash" (click)="deleteHobby(i)"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-right">
+  <button class="btn btn-primary " [disabled]="schoolForms.invalid" type="submit" >Submit</button>
+</div>
+</form>
+<div>
+</div>
+
+
+<div class="row">
+<div class="col-md-3">
+
+  <h1>Sections</h1>
+  <div *ngFor="let data of allData">
+    <h4>{{data.section}}</h4>
+  </div>
+</div>
+<div class="col-md-3">
+
+  <h1>School</h1>
+  <div *ngFor="let data of allData">
+    <h4>{{data.school}}</h4>
+  </div>
+</div>
+</div>
+</div>

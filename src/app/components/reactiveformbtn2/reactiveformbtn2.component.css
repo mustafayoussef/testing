@@ -1,0 +1,42 @@
+.card{
+  border-radius: 25px;
+}
+.edit-class{
+  display: none;
+}
+.num-class{
+  background-color: #919191;
+  border-radius: 25px 0px 0px 25px;
+  /* padding-top: 50px; */
+  display: flex;
+  justify-self: center;
+  align-items: center;
+}
+ .card:hover .num-class  {
+
+  background-color: #8f267b;
+
+}
+.card:hover .edit-class{
+  display: block;
+}
+/* ---Model--- */
+.modal-header{
+  background-color: #630b59;
+}
+
+.section-class{
+  border: solid black 1px;
+  border-radius: 20px;
+}
+.input-add {
+  position: relative;
+}
+.icon-add{
+  color: #8b5aaf;
+  cursor: pointer;
+}
+.add-class{
+  padding-left: 4rem;
+  color: #8b5aaf;
+}
