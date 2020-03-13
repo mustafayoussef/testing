@@ -4,8 +4,8 @@
 </button>
 
 <!-- Modal -->
-<div class="modal fade h-auto" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+<div class="modal fade h-auto" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document" >
     <div class="modal-content">
       <div class="modal-header text-white">
         <h5 class="modal-title" id="exampleModalLabel">Add Class</h5>
@@ -116,34 +116,279 @@
         <div class="content-class py-2">
           <h3>{{item.className}}</h3>
           <p>School:{{item.school}}</p>
-          <p>Grade: {{item.Grade}}</p>
+          <p>Grade: {{item.grade}}</p>
         </div>
       </div>
       <div class="col-sm-3 ">
         <div class="d-flex justify-content-lg-end pt-4 pr-4">
-
-          <i class="fas fa-ellipsis-h d-block "></i>
+          <i data-toggle="dropdown" class="drop-delete fas fa-ellipsis-h d-block "></i>
+          <div class="dropdown-menu edit-delete" >
+            <div class=" dropdown-item  pt-2 pr-4">
+              <button class="btn btn-outline-danger"  (click)="deleteClass(i)">Delete Class</button>
+            </div>
+          </div>
         </div>
-        <div class="d-flex justify-content-lg-end pt-2 pr-4">
-
-          <button class=" edit-class btn btn-outline-success" (click)="deleteClass(i)">Edit Class</button>
-
+        <div class="d-flex justify-content-lg-end pt-2 mt-2 pr-4">
+          <button class=" edit-class btn btn-outline-success" (click)="edit(item , i)"  data-toggle="modal" data-target=".editModel">Edit Class</button>
+        </div>
       </div>
-    </div>
 
-  </div>
-</div>
+
+
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".editModel">Extra large modal</button>
+
+      <div class="modal fade editModel" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header text-white">
+              <h5 class="modal-title" id="editModelLabel">Edit</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="reset()">
+                <span class="text-white" aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+              <div class="container">
+                <div class="section-class shadow">
+                  <div class="row m-0">
+                    <div class="parent col-sm-12 p-2">
+                      <div class="create-class">
+                        <div class="container">
+                          <div class="row text-center pt-3 ml-0">
+                            <div class="col-sm-3">
+                              <h5>Section</h5>
+                            </div>
+                            <div class="col-sm-6">
+                              <h5>Name</h5>
+                            </div>
+                            <div class="col-sm-2">
+                              <h5>Grade</h5>
+                            </div>
+                          </div>
+                          <form (ngSubmit)="updateBtn()" [formGroup]="updateData" >
+                            <div class="row">
+                              <div class="col-sm-2 px-1">
+                                <div class="form-group">
+                                  <select class="form-control" formControlName="school" required name="school">
+                                    <option selected disabled value="" >Currunt school: {{curruntSchool}} </option>
+                                    <option *ngFor="let chose of Choices" [value]="chose.name" >{{chose.name}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-3 px-1">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" formControlName="section"  >
+                                </div>
+                              </div>
+                              <div class="col-sm-6 px-1">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" formControlName="className" >
+                                </div>
+                              </div>
+                              <div class="col-sm-2 px-1">
+                                <div class="form-group">
+                                  <select class="form-control" formControlName="grade" required name="grade">
+                                    <option selected disabled value="" >Currunt Choice: {{curruntData.grade}}</option>
+                                    <option *ngFor="let gra of grade" >{{gra}}</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-right">
+                              <button class="btn btn-primary "  type="submit" >Updata</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <!-- <div class="modal fade h-auto" id="editModel" tabindex="-1" role="dialog" aria-labelledby="editModelLabel"  aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document" >
+          <div class="modal-content">
+            <div class="modal-header text-white">
+              <h5 class="modal-title" id="editModelLabel">Edit</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="reset()">
+                <span class="text-white" aria-hidden="true">&times;</span>
+              </button>
+            </div> -->
+
+            <!-- Modal Body -->
+            <!-- <div class="modal-body">
+              <div class="container">
+                <div class="header py-5 px-5 text-left"> -->
+                  <!-- <h4 class="title pl-3" >School</h4> -->
+                  <!-- <div class="select"> -->
+                    <!-- <div class="col-md-3 mb-3" > -->
+                    <!-- <label for="validationCustom04"></label> -->
+                    <!-- <select class="custom-select"  id="validationCustom04" required name="updateSelect" [(ngModel)]="updateSelect"  >
+                      <option hidden value="" disabled selected>Select School Name </option>
+                      <option selected disabled value="" >Currunt School: {{curruntSchool}}</option>
+
+                      <option *ngFor="let chose of Choices"   [value]="chose.name" >{{chose.name}}</option>
+                    </select> -->
+                  <!-- </div> -->
+
+
+
+                  
+                  <!-- <div *ngIf="updateSelect" class=" section-class shadow"> -->
+
+
+
+
+
+                    <!-- <div class="section-class shadow">
+                    <div class="row m-0">
+                      <div class=" parent col-sm-12 p-2">
+                        <div class="create-class">
+                          <div class="container">
+                            <div class="row text-center pt-3 ml-0">
+                              <div class="col-sm-3">
+                                <h5>Section</h5>
+                              </div>
+                              <div class="col-sm-6">
+                                <h5>Name</h5>
+                              </div>
+                              <div class="col-sm-2">
+                                <h5>Grade</h5>
+                              </div>
+                            </div> -->
+
+
+                            <!--
+
+[value]="oldValue.section"
+[value]="oldValue.className"
+                                      <option disabled value="" selected>{{oldValue.grade}}</option>
+
+                             -->
+
+
+                            <!-- <form (ngSubmit)="updateBtn()" [formGroup]="updateData" >
+                              <div class="row">
+                                <div class="col-sm-2 px-1">
+                                  <div class="form-group">
+                                    <select class="form-control" formControlName="school" required name="school">
+                                      <option selected disabled value="" >Currunt school: {{curruntSchool}} </option>
+                                      <option *ngFor="let chose of Choices" [value]="chose.name" >{{chose.name}}</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-sm-3 px-1">
+                                  <div class="form-group">
+                                    <input type="text" class="form-control" formControlName="section"  >
+                                  </div>
+                                </div>
+                                <div class="col-sm-6 px-1">
+                                  <div class="form-group">
+                                    <input type="text" class="form-control" formControlName="className" >
+                                  </div>
+                                </div>
+                                <div class="col-sm-2 px-1">
+                                  <div class="form-group">
+                                    <select class="form-control" formControlName="grade" required name="grade">
+                                      <option selected disabled value="" >Currunt Choice: {{curruntData.grade}}</option>
+                                      <option *ngFor="let gra of grade" >{{gra}}</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="text-right">
+                                <button class="btn btn-primary "  type="submit" >Updata</button>
+                              </div>
+                            </form>
+
+ -->
+
+
+                            <!-- <form [formGroup]="schoolForms"    (ngSubmit)="submit()">
+                              <div  formArrayName="schoolArray"
+                              *ngFor="let item of controls; let i = index;">
+                              <div  [formGroupName]="i">
+                                <div class="row text-center my-2">
+                                  <div class="col-sm-3 px-1">
+                                    <input formControlName="section" class="form-control" placeholder="Section">
+
+                                    <div *ngIf="controls[i]['controls'].section.touched && controls[i]['controls'].section.invalid" class="alert alert-danger mt-1" role="alert">
+                                      <p *ngIf="controls[i]['controls'].section.errors.required" >Section is required!</p>
+                                      <p *ngIf="controls[i]['controls'].section.errors.maxlength" >MaxLength must be {{controls[i]['controls'].section.errors.maxlength.requiredLength}} Characters </p>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-6 px-1">
+                                    <input formControlName="className" class="form-control" placeholder="Class Name">
+
+                                    <div *ngIf="controls[i]['controls'].className.touched && controls[i]['controls'].className.invalid" class="alert alert-danger mt-1" role="alert">
+                                      <p *ngIf="controls[i]['controls'].className.errors.required" >Class Name is required!</p>
+                                      <p *ngIf="controls[i]['controls'].className.errors.maxlength" >MaxLength must be {{controls[i]['controls'].className.errors.maxlength.requiredLength}} Characters </p>
+                                    </div>
+                                  </div>
+                                  <div class=" col-sm-2 px-1 text-center">
+                                    <div>
+                                      <select name="grade" class="form-control" formControlName="grade">
+                                        <option hidden value="" disabled selected>Grade</option>
+                                        <option *ngFor="let gra of grade" [value]="gra" class="text-center" >{{gra}}</option>
+                                      </select>
+
+                                      <div *ngIf="controls[i]['controls'].grade.touched && controls[i]['controls'].grade.invalid" class="alert alert-danger mt-1" role="alert">
+                                        <p *ngIf="controls[i]['controls'].grade.errors.required" >grade is required!</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="text-right">
+                              <button class="btn btn-primary " [disabled]="schoolForms.invalid" type="submit" >Updata</button>
+                            </div>
+                          </form> -->
+                          <!-- </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+ -->
+
+
+
+
+
+
+
+
+
+    <!-- </div> -->
+  <!-- </div> -->
   <!-- Tell Add New Class -->
-<div *ngIf="allData == null" >
-  <div class="card shadow my-2">
-    <div class="row" >
-      <div class="col-sm-12" >
-        <div class="content-class  py-5 d-flex justify-content-center align-items-center">
-          <h4>Add A New Class</h4>
+  <div *ngIf="allData == null" >
+    <div class="card shadow my-2">
+      <div class="row" >
+        <div class="col-sm-12" >
+          <div class="content-class  py-5 d-flex justify-content-center align-items-center">
+            <h4>Add A New Class</h4>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 </div>
+

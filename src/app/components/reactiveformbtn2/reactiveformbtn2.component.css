@@ -1,7 +1,7 @@
 .card{
   border-radius: 25px;
 }
-.edit-class{
+.edit-class {
   display: none;
 }
 .num-class{
@@ -13,9 +13,7 @@
   align-items: center;
 }
  .card:hover .num-class  {
-
   background-color: #8f267b;
-
 }
 .card:hover .edit-class{
   display: block;
@@ -39,4 +37,7 @@
 .add-class{
   padding-left: 4rem;
   color: #8b5aaf;
+}
+.drop-delete{
+  cursor: pointer !important;
 }

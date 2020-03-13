@@ -9,6 +9,7 @@ import { FormGroup, FormControl, FormArray, Validators,FormBuilder } from '@angu
 export class Reactiveformbtn2Component implements OnInit {
   schoolForms: FormGroup;
   schoolArray: FormArray;
+  updateSchoolForm: FormGroup;
   grade:number[];
   objData:any;
   formList=[];
@@ -18,6 +19,9 @@ export class Reactiveformbtn2Component implements OnInit {
   get controls(){
     return this.schoolForms.get('schoolArray')['controls'];
   }
+  // get updateForm(){
+  //   return this.oldData.get('schoolArray')['controls'];
+  // }
   Choices=[
     {name:"Cairo English School",id:1},
     {name:"British International",id:2},
@@ -25,15 +29,19 @@ export class Reactiveformbtn2Component implements OnInit {
   ];
   select:string="";
   constructor(private formBuilder: FormBuilder) {
-    console.log(this.select);
     this.arrayOfObj.push(this.count);
     this.display();
+
   }
+
   ngOnInit(): void {
     this.grade=[1,2,3];
     this.schoolForms = this.formBuilder.group({
       schoolArray: this.formBuilder.array([ this.createItem() ])
     });
+
+
+
   }
   createItem(): FormGroup {
     return this.formBuilder.group({
@@ -89,55 +97,94 @@ export class Reactiveformbtn2Component implements OnInit {
 
 
   deleteClass(i){
-console.log(this.allData[i]);
+   this.allData.splice(i,1)
+   localStorage.setItem("schoolForm",JSON.stringify(this.allData));
+  }
 
-    // console.log(this.allData.splice(this.allData,this.allData[i]));
-    console.log(localStorage.removeItem(this.allData[i]));
-    for (let index = 0; index < this.allData.length; index++) {
-      // console.log(this.allData[[index] [i]]);
-
-
-    }
-    // console.log(this.allData[i]);
-    // this.allData.splice(this.allData[i],-1)
-    // localStorage.setItem("schoolForm",JSON.stringify(this.allData));
-    // this.display();
-    // localStorage.removeItem(this.allData[i]);
-    // this.allData=JSON.parse(localStorage.getItem("schoolForm"));
-    // for (let i = 0; i < this.allData.length; i++) {
-      //   if (this.allData[i] == url) {
-        //     console.log("as");
-
-        //       this.allData.splice(i,1);
-        //   }
-
-        // }
-        // console.log(i);
-        // for (let index = 0; index < this.allData.length; index++) {
-      // if(this.allData[index].url == url){
-      //   console.log(url);
-
-      // }
+  newData:any;
+  newSection:any;
+  oldValue:any;
+  curruntLenght:any;
+  curruntData:any;
+  curruntSchool:any;
+  updateData:any;
+  updateSelect:string;
 
 
-    // }
-    // console.log(
+  edit(data , length){
+    this.curruntLenght = length;
+    this.curruntData = data;
+    this.curruntSchool = this.allData[length].school;
+
+    // console.log(this.curruntSchool);
 
 
 
-    // );
+    this.updateData =new FormGroup({
+      section: new FormControl(this.curruntData.section,[Validators.required,Validators.maxLength(3)]),
+      className: new FormControl(this.curruntData.className,[Validators.required,Validators.maxLength(40)]),
+      grade: new FormControl(this.curruntData.section,[Validators.required]),
+      school: new FormControl(this.curruntData.school),
+    });
+
+    // console.log(this.updateSelect);
+    console.log(this.updateData);
+
+
+
+    console.log(data);
+    // console.log(this.curruntData.section);
+
+
+    // this.updateData = this.formBuilder.group({
+    //   section: [data.section,[Validators.required,Validators.maxLength(3)]],
+    //   className: [data.className,[Validators.required,Validators.maxLength(40)]],
+    //   grade: [data.grade,[Validators.required]],
+    //   school: [data.school],
+    // });
+    // this.oldValue=this.updateData.value;
 
 
   }
 
-  edit(i){
-    alert(i);
+  updateBtn(){
+    // this.up();
+    this.schoolArray = this.schoolForms.get('schoolArray') as FormArray;
+    this.schoolArray.push(this.updateData);
+
+
+    // this.updateData.push({school: new FormControl(this.updateSelect)});
+    console.log(this.updateData);
+    console.log(this.updateSelect);
+    console.log(this.updateData.value);
+    console.log(this.curruntLenght);
+    this.allData.splice(this.curruntLenght,1,this.updateData.value);
+    console.log(this.allData);
+
+    // console.log(this.updateData.value.section);
+
+
+    // this.newData = {
+    //   section: "",
+    //   className: "helloClassName",
+    //   grade: 123,
+    //   school: "helloSchool",
+    // };
+      // console.log(this.newData);
+    // this.allData.splice(this.curruntLenght,1,this.newData);
+    // console.log(this.allData);
+
+    // console.log(this.newSection);
+
+
+
+
+
+
+    // console.log(this.updateValue);
+    // console.log(this.newData);
+    // console.log(this.schoolForms);
   }
-
-
-
-
-
 
 
 }
